@@ -1,53 +1,67 @@
-# Project
+## 📜 프로젝트 소개
+전화번호부를 웹 방식으로 구현한 프로젝트입니다.
+## 🚀 기술 스택
+HTML, CSS, JavaScript, Nodejs, Bootstrap
+## ❔ 주요 기능
+### ⭐ 공통
+- 위쪽에 현재 시각 표시
+- 어두운 테마의 핸드폰 디자인
+### 📱 Phone(초기 화면)
+- 연락처 아이콘을 클릭하여 연락처를 볼 수 있음
+### 📃 List
+- 저장되어 있는 연락처 목록을 볼 수 있고, 초기 목록은 json 정보 참조  
+- ➕ 아이콘 클릭 시 연락처 Insert 페이지로 이동  
+- 이미지 클릭시 상세 페이지로 이동
+### 🔎 Detail
+- 통화 버튼 클릭 시 통화 가능  
+- 왼쪽 위 ⬅버튼 클릭 시 List 페이지로 이동  
+- 오른쪽 위 메뉴 버튼 클릭 시 수정 또는 삭제 버튼이 보임  
+- 수정 버튼 클릭 시 수정 페이지로 이동, 삭제 버튼 클릭 시 정말 삭제할 지 물어보고 확인 클릭 시 삭제됨
+### ✏️ Edit
+- 이미지에 마우스를 올리면 ➕버튼이 생기고, 클릭 시 사진을 선택할 수 있는 Album 페이지로 이동  
+- 표기된 이름, 전화번호, 이메일 수정 가능  
+- 오른쪽 위 ✔ 버튼 클릭 시 수정사항이 적용되고, Detail 화면으로 이동
+### 📌 Insert
+- 기본 이미지에 마우스를 올리면 ➕버튼이 생기고, 클릭 시 사진을 선택할 수 있는 Album 페이지로 이동  
+- 표기된 이름, 전화번호, 이메일 입력 후 오른쪽 위 ✔ 버튼 클릭 시 연락처를 추가하고, List 페이지로 이동
+### 📞 Call
+- 현재 통화 시간 표기
+- 통화 종료 버튼 클릭 시 Detail로 이동
+### 🖼️ Album
+- 저장된 이미지의 정보들을 확인할 수 있고, 전체보기(초기값)를 클릭하여 분류 정보를 변경할 수 있음[전체보기, Download, KakaoTalk, Naver, DCIM]
+- 원하는 이미지 클릭 시 이미지로 선택 및 이전 페이지로 돌아감
+## 📄 설계
+### 각 페이지 주요 기능 설계
+```
+🏠 홈
+- 전화번호 창으로 이동
+- 연락처 창으로 이동
+📃 리스트
+- 추가 회원정보 입력, 프로필 사진 등록
+- 삭제 리스트에서 회원정보 삭제
+🔎 연락처 상세화면
+- 수정, 삭제가 가능한 메뉴창 
+✏️ 수정 화면
+- 프로필 사진, 이름, 전화번호, 이메일 수정
+- 완료 시 수정된 정보 업데이트
+- 수정 후 창 나갈 시 경고 안내문
+📞 전화
+- 전화 끊기 기능
+```
+### 디자인 설계
+🎨 <a href="https://www.figma.com/design/HKhAbR1ScZcqnLWmctCASq/Untitled?node-id=0-1&t=3UdmMkUA37LtHcyM-1">figma링크 바로가기</a>
+## 📝 배운점  
+`Node js`를 통한 번들링  
+`CopyWebpack` 플러그인  
+번들링 디렉토리 구조 변경  
+`local storage`와 `session storage`  
+스크롤 설정 `::-webkit-scrollbar`와 `-ms-overflow-style`  
+번들링된 디렉토리 내의 원하는 리소스 접근 방법  
+json 파일 다루기
+## 😵 문제 해결과정
+|문제|원인|해결과정|
+|----|----|--------|
+|웹팩으로 이미지를 불러오지 못함|require.context()의 경로 동적 처리|require.context()는 빌드 시점에 경로를 파악 해야 하기 때문에 동적인 경로 설정 불가! -> 정적인 경로로 바꿈|
+|일부 이미지를 불러오지 못함|local storage에 있는 수정하기 전 이미지에 대한 정보를 불러와 발생|localStorage.clear()를 통해 local storage의 정보를 초기화 하고, 초기값 불러오도록 설정|
+|이미지 깜빡임 현상|로딩 지연 및 js를 통한 src속성 변경|preload 적용 및 transition 속성을 이용한 페이드 인 효과로 개선|
 
-05/23
-```
-각 파일 디렉토리 구조 정리
-webpack -> dist디렉토리에 정리
-실제 화면 dist/html/(파일명).html 에서 확인 가능
-
-html 파일에 PB_Insert.html, PB_Insert.css 파일 추가, ← src 파일에서 확인 가능
-images파일에 PB_insert_button.png 이미지 추가, PB_List.html 수정 ← src 파일에서 확인 가능
-```
-05/24
-```
-PB_Insert 페이지 웹팩 추가
-JSON 정보 중 이미지 경로 -> id로 변경(이미지는 '(이름).png'로 접근)
-PB_Insert와 PB_Edit 페이지에서 해당하는 프로필 정보 표기
-```
-05/25
-```
-src 파일에 있는 모든 HTML, CSS 수정(디자인 부분만)
-src 파일에서 js 폴더에 Clock.js, Timer.js 추가
-(Clock은 모든 HTML에서 사용되고, Timer는 PB_Call.html에서 사용됨)
-Clock.js와 Timer.js 웹팩 적용
-```
-05/27
-```
-src/images 경로에 gallery 추가(각 이미지 분류 및 추가는 하위 디렉토리에서 가능)
-Album.html 화면 구현 및 선택한 메뉴에 따라 이미지 로드(완료 버튼은 아직 구현X)
-Album.html과 Album.css 웹팩 적용
-PB_Insert_css에서 navigation(margin-top) 부분 수정(src, dist 둘다 수정)
-```
-05/28
-```
-'(유저 이름).png'로 접근 => '이미지 파일명'으로 접근
-json 목록에 이미지 파일명에 해당하는 image속성 추가
-PB_Insert.html과 PB_edit.html 페이지의 Album에서 사진 가져오기 및 적용
-연락처 추가
-> 앨벌에서 이미지 선택 시 -> 선택한 이미지
-> 선택 안할 시 -> 기본 이미지
-```
-05/29
-```
-전체적인 디자인 수정
-```
-05/30
-```
-json과 local storage 이메일 정보 추가
-json의 이미지 파일명과 이메일은 PB_List에서 초기 설정하도록 변경
-Album 디자인 수정 및 PB_Datil dropdown-menu 수정
-Album과 PB_List 스크롤바 제거(휠 버튼으로 화면 내리기)
-코드 리펙토링 및 UI 최적화(preload)
-전체 기능 테스트 및 오류 수정
-```
