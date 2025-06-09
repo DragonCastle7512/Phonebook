@@ -17,38 +17,33 @@ export function load(num) {
     a.appendChild(profile);
     div.appendChild(a);
     //모든 이미지 로드
-    if(num == 0) {
+    function renderImages(images, label) {
         let count = 0;
-        galleries.forEach((images) => {
-            images.keys().forEach((fileName) => {
-                let a = document.createElement("a");
-                let img = document.createElement("img");
-                a.href = "javascript:void(0)";
-                img.src = images(fileName);
-                img.addEventListener("click", () => {
-                    localStorage.setItem("selectedImage", fileName.substring(2));    //이미지 경로 임시 저장
-                    history.back();
-                });
-                a.appendChild(img);
-                div.appendChild(a);
-                count++;
-            });
-        });
-        document.getElementById("menu-toggle").querySelector("span").textContent = `전체보기 ${count}`;
-    }
-    //특정 디렉토리의 이미지 로드
-    else {
-        let count = 0;
-        galleries[num-1].keys().forEach((fileName) => {
+        images.keys().forEach((fileName) => {
             let a = document.createElement("a");
             let img = document.createElement("img");
             a.href = "javascript:void(0)";
-            img.src = galleries[num-1](fileName);
+            img.src = images(fileName);
+            img.addEventListener("click", () => {
+                localStorage.setItem("selectedImage", fileName.substring(2)); // 이미지 경로 임시 저장
+                history.back();
+            });
             a.appendChild(img);
             div.appendChild(a);
             count++;
         });
-        document.getElementById("menu-toggle").querySelector("span").textContent = `${dir[num-1]} ${count}`;
+        document.getElementById("menu-toggle").querySelector("span").textContent = `${label} ${count}`;
+    }
+    // 메인 로직
+    if (num === 0) {
+        let totalCount = 0;
+        galleries.forEach((images) => {
+            renderImages(images, "전체보기");
+            totalCount += images.keys().length;
+        });
+        document.getElementById("menu-toggle").querySelector("span").textContent = `전체보기 ${totalCount}`;
+    } else {
+        renderImages(galleries[num-1], dir[num-1]);
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
